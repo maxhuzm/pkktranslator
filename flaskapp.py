@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, make_response
 import requests
 import sys
 
@@ -12,7 +12,8 @@ def hello_world():
 @app.route('/export', methods=['GET'])
 def pkktranslate():
     pkkpath = 'http://pkk5.rosreestr.ru/arcgis/rest/services/Cadastre/Cadastre/MapServer/export'
-    para = {
+    # make request
+    params = {
         'layers' : request.args.get('layers'),
         'FORMAT' : request.args.get('FORMAT'),
         'TRANSPARENT' : request.args.get('TRANSPARENT'),
@@ -21,13 +22,22 @@ def pkktranslate():
         'SIZE' : request.args.get('SIZE'),
         'MAXZOOM' : request.args.get('MAXZOOM'),
         'OPACITY' : request.args.get('OPACITY'),
+        'bbox' : request.args.get('bbox'),
         'BBOXSR' : request.args.get('BBOXSR'),
         'IMAGESR' : request.args.get('IMAGESR'),
         'bbox' : request.args.get('bbox')
     }
-    r = requests.get(pkkpath, params=para)
-    print(r.text, file=sys.stderr)
-    return r.text
+    headers = {
+        'Accept' : 'image/webp,image/*,*/*;q=0.8',
+        'Accept-Encoding' : 'gzip, deflate, sdch',
+        'Accept-Language' : 'ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4'
+    }
+    r = requests.get(pkkpath, params=params, headers=headers)
+    # prepare response
+    resp = make_response(r.content, 200)
+    resp.headers['Content-Type'] = 'image/png'
+    resp.headers['Accept-Ranges'] = 'bytes'
+    return resp
 
 if __name__ == '__main__':
     app.run()
