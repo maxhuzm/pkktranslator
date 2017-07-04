@@ -32,7 +32,7 @@ def pkktranslate():
         'Accept-Encoding' : 'gzip, deflate, sdch',
         'Accept-Language' : 'ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4'
     }
-    r = requests.get(pkkpath, params=params, headers=headers)
+    r = requests.get(pkkpath, params=params, headers=headers, timeout=5)
     # prepare response
     resp = make_response(r.content, 200)
     resp.headers['Content-Type'] = 'image/png'
@@ -48,7 +48,7 @@ def pkksearch():
         'text': request.args.get('text'),
         'limit': 5
     }
-    r = requests.get(pkkpath + objtype, params=params)
+    r = requests.get(pkkpath + objtype, params=params, timeout=5)
     resp = make_response(r.content, 200)
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
@@ -58,7 +58,7 @@ def pkksearch():
 def pkkobjectinfo(obj_id):
     objtype = request.args.get('objtype')
     pkkpath = 'http://pkk5.rosreestr.ru/api/features/' + objtype + '/' + obj_id
-    r = requests.get(pkkpath)
+    r = requests.get(pkkpath, timeout=5)
     resp = make_response(r.content, 200)
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
