@@ -39,5 +39,21 @@ def pkktranslate():
     resp.headers['Accept-Ranges'] = 'bytes'
     return resp
 
+@app.route('/search', methods=['GET'])
+def pkksearch():
+    pkkpath = 'http://pkk5.rosreestr.ru/api/features/'
+    params = {
+        'text': request.args.get('text'),
+        'limit': 5
+    }
+    r = requests.get(pkkpath + '1', params=params, headers=headers)
+    resp = make_response(r.content, 200)
+    return resp
+
+@app.route('/objinfo', methods=['GET'])
+def pkkobjectinfo():
+    pkkpath = 'http://pkk5.rosreestr.ru/api/features/'
+
+
 if __name__ == '__main__':
     app.run()
