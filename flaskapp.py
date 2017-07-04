@@ -43,7 +43,7 @@ def pkktranslate():
 @app.route('/search', methods=['GET'])
 def pkksearch():
     pkkpath = 'http://pkk5.rosreestr.ru/api/features/'
-    obj_type = request.args.get('objtype')
+    objtype = request.args.get('objtype')
     params = {
         'text': request.args.get('text'),
         'limit': 5
@@ -56,11 +56,11 @@ def pkksearch():
 @app.route('/objinfo/<obj_id>', methods=['GET'])
 def pkkobjectinfo(obj_id):
     pkkpath = 'http://pkk5.rosreestr.ru/api/features/'
-    obj_type = request.args.get('objtype')
+    objtype = request.args.get('objtype')
     r = requests.get(pkkpath + objtype + '/' + obj_id)
     resp = make_response(r.content, 200)
     return resp
-    
+
 
 if __name__ == '__main__':
     app.run()
