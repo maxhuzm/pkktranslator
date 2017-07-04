@@ -46,7 +46,7 @@ def pkksearch():
         'text': request.args.get('text'),
         'limit': 5
     }
-    r = requests.get(pkkpath + '1', params=params, headers=headers)
+    r = requests.get(pkkpath + '1', params=params)
     resp = make_response(r.content, 200)
     return resp
 
