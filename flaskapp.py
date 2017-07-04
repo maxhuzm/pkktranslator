@@ -50,15 +50,17 @@ def pkksearch():
     }
     r = requests.get(pkkpath + objtype, params=params)
     resp = make_response(r.content, 200)
+    resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
 
 @app.route('/objinfo/<obj_id>', methods=['GET'])
 def pkkobjectinfo(obj_id):
-    pkkpath = 'http://pkk5.rosreestr.ru/api/features/'
     objtype = request.args.get('objtype')
-    r = requests.get(pkkpath + objtype + '/' + obj_id)
+    pkkpath = 'http://pkk5.rosreestr.ru/api/features/' + objtype + '/' + obj_id
+    r = requests.get(pkkpath)
     resp = make_response(r.content, 200)
+    resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
 
