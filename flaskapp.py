@@ -46,6 +46,7 @@ def pkksearch():
     objtype = request.args.get('objtype')
     params = {
         'text': request.args.get('text'),
+        'tolerance': 40,
         'limit': 5
     }
     r = requests.get(pkkpath + objtype, params=params, timeout=5)
