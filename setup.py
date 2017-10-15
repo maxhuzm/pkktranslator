@@ -1,10 +1,10 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
-setup(name='YourAppName',
-      version='1.0',
-      description='OpenShift App',
-      author='Your Name',
-      author_email='example@example.com',
-      url='http://www.python.org/sigs/distutils-sig/',
-#      install_requires=['Django>=1.3'],
-     )
+
+setup (
+    name             = "pkktranslator",
+    version          = "0.1",
+    description      = "Proxy for pkk5 map services",
+    packages         = find_packages(),
+    install_requires = ["gunicorn"],
+)     
